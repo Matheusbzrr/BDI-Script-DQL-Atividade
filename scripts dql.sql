@@ -86,7 +86,7 @@ select fp.tipo "Tipo Forma de Pagamento", count(fp.idFormaPgVenda) "Quantidade V
             order by  count(fp.idFormaPgVenda) desc;
             
 
-select date_format( vnd.data, '%d/%m/%Y') "Data da Venda",  count(vnd.idVenda) "Quantidade Vendas", concat("R$ ", format(sum(vnd.valor - vnd.desconto), 2, 'de_DE')) "Valor Total Pago"
+select date_format( vnd.data, '%d/%m/%Y') "Data da Venda",  count(vnd.idVenda) "Quantidade Vendas", concat("R$ ", format(sum(vnd.valor - vnd.desconto), 2, 'de_DE')) "Valor Total Venda"
 	from venda vnd
 		group by vnd.data
         order by vnd.data;
