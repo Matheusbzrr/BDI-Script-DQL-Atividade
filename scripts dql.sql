@@ -80,18 +80,16 @@ select srv.nome "Nome do Serviço", count(its.Venda_idVenda) "Quantidade Vendas"
             order by count(its.Venda_idVenda) desc
             limit 10;
             
-select fp.tipo "Tipo Forma de Pagamento", count(vnd.idVenda) "Quantidade Vendas", concat("R$ ", format(sum(fp.valorPago), 2, 'de_DE')) "Valor Total Pago"
+select fp.tipo "Tipo Forma de Pagamento", count(fp.idFormaPgVenda) "Quantidade Vendas", concat("R$ ", format(sum(fp.valorPago), 2, 'de_DE')) "Valor Total Pago"
 	from formapgvenda fp
-		inner join venda vnd
-			on fp.Venda_idVenda = vnd.idVenda
             group by fp.tipo
-            order by  count(vnd.idVenda) desc;
+            order by  count(fp.idFormaPgVenda) desc;
             
 
-select date_format( vnd.data, '%d/%m/%Y') "Data da Venda",   date_format(vnd.data, '%H:%i') "Horário da Venda", count(vnd.idVenda) "Quantidade Vendas", concat("R$ ", format(sum(vnd.valor), 2, 'de_DE')) "Valor Total Pago"
+select date_format( vnd.data, '%d/%m/%Y') "Data da Venda",  count(vnd.idVenda) "Quantidade Vendas", concat("R$ ", format(sum(vnd.valor - vnd.desconto), 2, 'de_DE')) "Valor Total Pago"
 	from venda vnd
 		group by vnd.data
-        order by vnd.data desc;
+        order by vnd.data;
         
 select pdt.nome "Nome do produto", concat("R$ ", format(pdt.precoCusto, 2, 'de_DE'))  "Valor do Produto", pdt.marca "Categoria do Produto", fnd.nome "Fornecedor", fnd.email "Email Fornecedor",
 		coalesce(tel.numero, 'Sem Telefone') "Número de Telefone"
